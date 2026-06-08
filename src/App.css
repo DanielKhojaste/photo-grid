@@ -15,25 +15,73 @@ body {
 	align-items: center;
 }
 
-.print-actions-btn {
-	margin-bottom: 30px;
+/* Control Panel Layout */
+.controls-container {
+	display: flex;
+	gap: 12px;
+	margin-bottom: 35px;
+}
+
+.btn {
 	padding: 12px 24px;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 600;
-	color: #ffffff;
-	background-color: #0066cc;
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	transition: background-color 0.2s ease;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	user-select: none;
 }
 
-.print-actions-btn:hover {
+.btn-upload {
+	background-color: #0066cc;
+	color: #ffffff;
+}
+.btn-upload:hover {
 	background-color: #0052a3;
 }
 
-/* 3-Column Grid Configuration */
+.btn-print {
+	background-color: #28a745;
+	color: #ffffff;
+}
+.btn-print:hover {
+	background-color: #218838;
+}
+
+.btn-clear {
+	background-color: #fff;
+	color: #dc3545;
+	border: 1px solid #dc3545;
+	box-shadow: none;
+}
+.btn-clear:hover {
+	background-color: #dc3545;
+	color: #fff;
+}
+
+/* Empty Placeholder Box */
+.empty-state {
+	margin-top: 40px;
+	text-align: center;
+	color: #6c757d;
+	border: 2px dashed #ced4da;
+	padding: 60px 40px;
+	border-radius: 12px;
+	background: #fff;
+	max-width: 500px;
+}
+
+.empty-state p {
+	font-size: 18px;
+	margin: 0 0 8px 0;
+	font-weight: 500;
+}
+
+/* Responsive 3-Column Grid */
 .print-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -47,17 +95,17 @@ body {
 	background: #ffffff;
 	border-radius: 8px;
 	padding: 12px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 	box-sizing: border-box;
 }
 
-/* Forces the image container into a strict vertical 3:4 aspect ratio */
+/* Strict Portrait Box (3:4 ratio) */
 .image-wrapper {
 	width: 100%;
 	aspect-ratio: 3 / 4;
 	overflow: hidden;
 	border-radius: 6px;
-	background-color: #eaeaea;
+	background-color: #f0f0f0;
 }
 
 .vertical-image {
@@ -69,7 +117,7 @@ body {
 
 .item-name {
 	margin: 12px 0 4px 0;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 600;
 	text-align: center;
 	word-break: break-word;
@@ -79,7 +127,7 @@ body {
 @media print {
 	@page {
 		size: portrait;
-		margin: 0.5in; /* Gives clean breathing room on physical paper */
+		margin: 0.5in;
 	}
 
 	body {
@@ -93,16 +141,17 @@ body {
 		margin: 0;
 	}
 
-	/* Hides the print button so it doesn't show up on your paper */
-	.print-actions-btn {
+	/* Completely strips out the upload/print dashboard on paper */
+	.controls-container,
+	.empty-state {
 		display: none !important;
 	}
 
-	/* Locks the grid layout so the browser doesn't try to wrap it into a list */
+	/* Lock the structural layout parameters */
 	.print-grid {
 		display: grid !important;
 		grid-template-columns: repeat(3, 1fr) !important;
-		gap: 15px !important; /* Tightened up slightly for paper sizing */
+		gap: 15px !important;
 	}
 
 	.grid-card {
@@ -111,10 +160,9 @@ body {
 		border: none !important;
 		padding: 0 !important;
 		page-break-inside: avoid;
-		break-inside: avoid; /* Prevents a card from splitting across pages */
+		break-inside: avoid;
 	}
 
-	/* Ensures browser forces high-quality image colors during printing */
 	img {
 		print-color-adjust: exact;
 		-webkit-print-color-adjust: exact;
