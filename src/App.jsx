@@ -7,15 +7,12 @@ function App() {
 	const handleFileChange = (event) => {
 		const files = Array.from(event.target.files);
 
-		// Convert local files into temporary object URLs that React can render
 		const newItems = files.map((file, index) => ({
 			id: `${file.name}-${Date.now()}-${index}`,
-			// Cleans up the name by removing the file extension (e.g., "john_doe.jpg" -> "john_doe")
 			name: file.name.replace(/\.[^/.]+$/, ""),
 			imageUrl: URL.createObjectURL(file),
 		}));
 
-		// Appends new selections to the grid
 		setImageItems((prevItems) => [...prevItems, ...newItems]);
 	};
 
@@ -24,14 +21,12 @@ function App() {
 	};
 
 	const handleClear = () => {
-		// Clean up memory by revoking object URLs before wiping state
 		imageItems.forEach((item) => URL.revokeObjectURL(item.imageUrl));
 		setImageItems([]);
 	};
 
 	return (
 		<div className="app-container">
-			{/* Control panel hidden entirely during printing */}
 			<div className="controls-container">
 				<label className="btn btn-upload">
 					📁 Select Photos
@@ -59,7 +54,9 @@ function App() {
 			{imageItems.length === 0 ? (
 				<div className="empty-state">
 					<p>No photos uploaded yet. Click "Select Photos" to build your grid.</p>
-					<small>Tip: Select 12 portrait images for a perfect 3x4 layout page.</small>
+					<small>
+						Tip: Select up to 12 portrait images to fill a clean 3x4 layout single page.
+					</small>
 				</div>
 			) : (
 				<main className="print-grid">

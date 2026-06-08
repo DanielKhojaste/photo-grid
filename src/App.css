@@ -15,7 +15,6 @@ body {
 	align-items: center;
 }
 
-/* Control Panel Layout */
 .controls-container {
 	display: flex;
 	gap: 12px;
@@ -63,7 +62,6 @@ body {
 	color: #fff;
 }
 
-/* Empty Placeholder Box */
 .empty-state {
 	margin-top: 40px;
 	text-align: center;
@@ -81,7 +79,6 @@ body {
 	font-weight: 500;
 }
 
-/* Responsive 3-Column Grid */
 .print-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -99,7 +96,6 @@ body {
 	box-sizing: border-box;
 }
 
-/* Strict Portrait Box (3:4 ratio) */
 .image-wrapper {
 	width: 100%;
 	aspect-ratio: 3 / 4;
@@ -127,7 +123,7 @@ body {
 @media print {
 	@page {
 		size: portrait;
-		margin: 0.5in;
+		margin: 0.4in; /* Controlled margins to optimize page footprint */
 	}
 
 	body {
@@ -141,17 +137,16 @@ body {
 		margin: 0;
 	}
 
-	/* Completely strips out the upload/print dashboard on paper */
 	.controls-container,
 	.empty-state {
 		display: none !important;
 	}
 
-	/* Lock the structural layout parameters */
 	.print-grid {
 		display: grid !important;
 		grid-template-columns: repeat(3, 1fr) !important;
-		gap: 15px !important;
+		gap: 12px !important;
+		width: 100% !important;
 	}
 
 	.grid-card {
@@ -161,6 +156,32 @@ body {
 		padding: 0 !important;
 		page-break-inside: avoid;
 		break-inside: avoid;
+
+		/* CRITICAL FIX: Caps the element height so 4 rows stay mathematically forced onto 1 page */
+		max-height: 21vh !important;
+		display: flex !important;
+		flex-direction: column !important;
+	}
+
+	.image-wrapper {
+		aspect-ratio: unset !important; /* Allows flexible vertical scaling */
+		flex: 1 !important;
+		height: 0 !important; /* Essential hack for standard flexbox shrinking mechanics */
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+
+	.vertical-image {
+		width: 100% !important;
+		height: 100% !important;
+		object-fit: contain !important; /* Prevents awkward head-cropping when scaled down */
+	}
+
+	.item-name {
+		margin: 6px 0 0 0 !important;
+		font-size: 13px !important;
+		line-height: 1.2 !important;
 	}
 
 	img {
