@@ -1,0 +1,122 @@
+/* --- Screen & Global Styles --- */
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	background-color: #f4f5f7;
+	color: #333;
+}
+
+.app-container {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 40px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.print-actions-btn {
+	margin-bottom: 30px;
+	padding: 12px 24px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #ffffff;
+	background-color: #0066cc;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.2s ease;
+}
+
+.print-actions-btn:hover {
+	background-color: #0052a3;
+}
+
+/* 3-Column Grid Configuration */
+.print-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	width: 100%;
+}
+
+.grid-card {
+	display: flex;
+	flex-direction: column;
+	background: #ffffff;
+	border-radius: 8px;
+	padding: 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	box-sizing: border-box;
+}
+
+/* Forces the image container into a strict vertical 3:4 aspect ratio */
+.image-wrapper {
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	border-radius: 6px;
+	background-color: #eaeaea;
+}
+
+.vertical-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.item-name {
+	margin: 12px 0 4px 0;
+	font-size: 16px;
+	font-weight: 600;
+	text-align: center;
+	word-break: break-word;
+}
+
+/* --- Strict Print Media Styles --- */
+@media print {
+	@page {
+		size: portrait;
+		margin: 0.5in; /* Gives clean breathing room on physical paper */
+	}
+
+	body {
+		background-color: #ffffff;
+		color: #000000;
+	}
+
+	.app-container {
+		max-width: 100%;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* Hides the print button so it doesn't show up on your paper */
+	.print-actions-btn {
+		display: none !important;
+	}
+
+	/* Locks the grid layout so the browser doesn't try to wrap it into a list */
+	.print-grid {
+		display: grid !important;
+		grid-template-columns: repeat(3, 1fr) !important;
+		gap: 15px !important; /* Tightened up slightly for paper sizing */
+	}
+
+	.grid-card {
+		background: transparent !important;
+		box-shadow: none !important;
+		border: none !important;
+		padding: 0 !important;
+		page-break-inside: avoid;
+		break-inside: avoid; /* Prevents a card from splitting across pages */
+	}
+
+	/* Ensures browser forces high-quality image colors during printing */
+	img {
+		print-color-adjust: exact;
+		-webkit-print-color-adjust: exact;
+	}
+}
